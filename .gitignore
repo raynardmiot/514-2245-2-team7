@@ -3,6 +3,11 @@ venv
 __pycache__
 .terraform*
 terraform.tfstate*
-terraform.tfvars
 aws_key
 aws_secret
+
+# Zipped Lambda code
+terraform/lambda/out
+
+# Environment variables
+terraform.tfvars
