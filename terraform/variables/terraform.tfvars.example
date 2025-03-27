@@ -1,0 +1,3 @@
+// The Amazon Rekognition Project ARN
+// Needed by `s3_to_rekog_to_dynamo` lambda
+rekog_project_arn = "arn:aws:rekognition:..."
