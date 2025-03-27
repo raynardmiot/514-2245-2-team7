@@ -1,2 +1,0 @@
-#Terraform code for setting up the api getaway to upload jpeg images into S3 bucket. 
-It contains the lambda function setup (zip file is located under lambda_function folder), IAM roles and permissions.

@@ -1,24 +1,10 @@
-terraform {
-	required_providers {
-		aws = {
-			source = "hashicorp/aws"
-		}
-	}
-}
-
-provider "aws" {
-	region = file("${path.module}/../config/aws_region")
-	access_key = file("${path.module}/../config/aws_key")
-	secret_key = file("${path.module}/../config/aws_secret")
-}
-
 resource "aws_instance" "ec2" {
 	ami = "ami-084568db4383264d4"  // Ubuntu Server 24.04 LTS
 	instance_type = "t2.micro"
 	vpc_security_group_ids = [ aws_security_group.ec2_security_group.id ]
 
 	// Github must remain public for setup script to work
-	user_data = file("${path.module}/setup.sh")
+	user_data = file("${path.module}/dependencies/ec2_setup.sh")
 
 	tags = {
 		Name = "swen-514-7-webserver"
@@ -68,6 +54,6 @@ resource "aws_security_group_rule" "allow_outbound_traffic" {
 
 resource "aws_default_vpc" "default_vpc" { }
 
-output "instance_ip_addr" {
-	value = aws_instance.ec2.public_ip
+output "frontend_url" {
+	value = "http://${aws_instance.ec2.public_dns}:3000"
 }
