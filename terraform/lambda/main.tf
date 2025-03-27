@@ -34,19 +34,19 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
             {
                 "Effect": "Allow",
                 "Action": "dynamodb:PutItem",
-                "Resource": "arn:aws:dynamodb:us-east-1:699475959125:table/CatImageLabels"
+                "Resource": var.dynamodb_table_arn
             },
             {
                 "Effect": "Allow",
                 "Action": "rekognition:DetectCustomLabels",
-                "Resource": "arn:aws:rekognition:us-east-1:699475959125:project/cat-subreddit-discovery-system/version/cat-subreddit-discovery-system.2025-03-25T00.21.11/1742876471796"
+                "Resource": var.rekog_project_arn
             },
             {
                 "Effect": "Allow",
                 "Action": "s3:GetObject",
                 "Resource": [
-                    "arn:aws:s3:::514-test-cats-bucket",
-                    "arn:aws:s3:::514-test-cats-bucket/*"
+                    var.s3_bucket_arn,
+                    var.s3_bucket_arn + "/*"
                 ]
             },
             {
@@ -56,7 +56,7 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
                     "sqs:DeleteMessage",
                     "sqs:GetQueueAttributes"
                 ],
-                "Resource": "*" // Change to actual SQS queue ARN later
+                "Resource": var.sqs_queue_arn
             }
         ]
     })
