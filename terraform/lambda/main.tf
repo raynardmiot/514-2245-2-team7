@@ -1,3 +1,15 @@
+terraform {
+    required_providers {
+        aws = {
+            source = "hashicorp/aws"
+        }
+    }
+}
+
+provider "aws" {
+    region = file("${path.module}/../config/aws_region")
+}
+
 # IAM Role for the Lambda
 resource "aws_iam_role" "cat_sender_iam_role" {
   name = "CatSenderAssumeRole"
