@@ -11,6 +11,6 @@ configured through the AWS CLI, which should be installed on the AMI.
 ### Setup Environment Variables
 
 Certain environment variables will need to be set to allow access to certain AWS resources.
-These should be contained in `terraform/variables/terraform.tfvars`, a file which you will have to
-create. An example, `terraform/variables/terraform.tfvars.example`, has been provided to show you
+These should be contained in `terraform/terraform.tfvars`, a file which you will have to
+create. An example, `terraform/terraform.tfvars.example`, has been provided to show you
 what variables to set, along with a description of what they're used for.
