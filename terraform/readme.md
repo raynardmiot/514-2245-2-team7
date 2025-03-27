@@ -7,3 +7,10 @@ secret into their respective files. Do not paste anything else into the files.
 
 This is for development purposes only - in "production" we will have the AWS credentials
 configured through the AWS CLI, which should be installed on the AMI.
+
+### Setup Environment Variables
+
+Certain environment variables will need to be set to allow access to certain AWS resources.
+These should be contained in `terraform/variables/terraform.tfvars`, a file which you will have to
+create. An example, `terraform/variables/terraform.tfvars.example`, has been provided to show you
+what variables to set, along with a description of what they're used for.
