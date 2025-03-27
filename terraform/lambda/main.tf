@@ -12,17 +12,17 @@ provider "aws" {
 
 # IAM Role for the Lambda
 resource "aws_iam_role" "cat_sender_iam_role" {
-  name = "CatSenderAssumeRole"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-            Service = "lambda.amazonaws.com"
-        }
-    }]
-  })
+    name = "CatSenderAssumeRole"
+    assume_role_policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [{
+            Action = "sts:AssumeRole"
+            Effect = "Allow"
+            Principal = {
+                Service = "lambda.amazonaws.com"
+            }
+        }]
+    })
 }
 
 # IAM Policies for the Lambda
@@ -70,17 +70,17 @@ resource "aws_iam_role_policy_attachment" "attachment" {
 
 # ZIP the Python code
 data "archive_file" "output" {
-    type = "zip"
+    type        = "zip"
     source_file = "${path.module}/lambda_functions/cat_sender.py"
     output_path = "${path.module}/out/cat_sender.zip"
 }
 
 # Now create the actual Lambda
 resource "aws_lambda_function" "cat_sender_lambda" {
-  filename = data.archive_file.output.output_path
-  function_name = "CatSender"
-  role = aws_iam_role.cat_sender_iam_role.arn
-  handler = "cat_sender.lambda_handler"
-  source_code_hash = data.archive_file.output.output_base64sha256
-  runtime = "python3.11"
+    filename         = data.archive_file.output.output_path
+    function_name    = "CatSender"
+    role             = aws_iam_role.cat_sender_iam_role.arn
+    handler          = "cat_sender.lambda_handler"
+    source_code_hash = data.archive_file.output.output_base64sha256
+    runtime          = "python3.11"
 }
