@@ -98,7 +98,7 @@ resource "aws_api_gateway_resource" "uploadImage" {
 resource "aws_api_gateway_method" "UploadImageToS3" {
   rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
   resource_id   = aws_api_gateway_resource.uploadImage.id
-  http_method   = "POST"
+  http_method   = "GET"
   authorization = "NONE"
 }
 
