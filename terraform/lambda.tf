@@ -1,17 +1,3 @@
-terraform {
-    required_providers {
-        aws = {
-            source = "hashicorp/aws"
-        }
-    }
-}
-
-provider "aws" {
-	region = file("${path.module}/../config/aws_region")
-	access_key = file("${path.module}/../config/aws_key")
-	secret_key = file("${path.module}/../config/aws_secret")
-}
-
 # IAM Role for the Lambda
 resource "aws_iam_role" "cat_sender_iam_role" {
     name = "CatSenderAssumeRole"
@@ -67,14 +53,14 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
 # Attach IAM policy to IAM role
 resource "aws_iam_role_policy_attachment" "attachment" {
     role       = aws_iam_role.cat_sender_iam_role.name
-    policy_arn = aws_iam_policy.cat_sender_iam_policy.name 
+    policy_arn = aws_iam_policy.cat_sender_iam_policy.arn
 }
 
 # ZIP the Python code
 data "archive_file" "output" {
     type        = "zip"
     source_file = "${path.module}/lambda_functions/cat_sender.py"
-    output_path = "${path.module}/out/cat_sender.zip"
+    output_path = "${path.module}/lambda_functions/out/cat_sender.zip"
 }
 
 # Now create the actual Lambda
