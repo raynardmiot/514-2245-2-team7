@@ -7,7 +7,7 @@ aws_key
 aws_secret
 
 # Zipped Lambda code
-terraform/lambda/out
+terraform/lambda_functions/out
 
 # Environment variables
 terraform.tfvars
