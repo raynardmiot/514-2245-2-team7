@@ -1,4 +1,1 @@
 rekog_project_arn = "arn:aws:rekognition:..."
-dynamodb_table_arn = "arn:aws:dynamodb:..."
-s3_bucket_arn = "arn:aws:s3:..."
-sqs_queue_arn = "arn:aws:sqs:..."

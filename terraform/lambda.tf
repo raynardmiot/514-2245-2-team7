@@ -22,7 +22,7 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
             {
                 "Effect": "Allow",
                 "Action": "dynamodb:PutItem",
-                "Resource": var.dynamodb_table_arn
+                "Resource": aws_dynamodb_table.labels_table.arn
             },
             {
                 "Effect": "Allow",
@@ -33,8 +33,8 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
                 "Effect": "Allow",
                 "Action": "s3:GetObject",
                 "Resource": [
-                    var.s3_bucket_arn,
-                    var.s3_bucket_arn + "/*"
+                    aws_s3_bucket.s3.arn,
+                    aws_s3_bucket.s3.arn + "/*"
                 ]
             },
             {
@@ -44,7 +44,7 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
                     "sqs:DeleteMessage",
                     "sqs:GetQueueAttributes"
                 ],
-                "Resource": var.sqs_queue_arn
+                "Resource": "*"
             }
         ]
     })
