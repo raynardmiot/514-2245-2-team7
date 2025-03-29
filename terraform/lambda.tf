@@ -75,6 +75,7 @@ resource "aws_lambda_function" "cat_sender_lambda" {
     environment {
         variables = {
             REKOG_PROJECT_ARN = var.rekog_project_arn
+            DYNAMODB_TABLE_ARN = aws_dynamodb_table.labels_table.arn
         }
     }
 }

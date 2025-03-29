@@ -5,7 +5,11 @@ import os
 
 rekognition = boto3.client('rekognition')
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('CatImageLabels')
+
+# Get table name from ARN, use it to access DynamoDB table
+table_arn = os.environ.get('DYNAMODB_TABLE_ARN')
+table_name = table_arn.split('/')[-1]
+table = dynamodb.Table(table_name)
 
 rekog_arn = os.environ.get('REKOG_PROJECT_ARN')
 
