@@ -44,7 +44,7 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
                     "sqs:DeleteMessage",
                     "sqs:GetQueueAttributes"
                 ],
-                "Resource": "*"
+                "Resource": aws_sqs_queue.notification_queue.arn
             }
         ]
     })
