@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "aws" {
-  region = file("${path.module}/config/aws_region")
-	access_key = file("${path.module}/config/aws_key")
-	secret_key = file("${path.module}/config/aws_secret")
+  region = var.aws_region
+	access_key = var.aws_key
+	secret_key = var.aws_secret
 }

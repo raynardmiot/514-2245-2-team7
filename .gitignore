@@ -3,5 +3,4 @@ venv
 __pycache__
 .terraform*
 terraform.tfstate*
-aws_key
-aws_secret
+*.tfvars

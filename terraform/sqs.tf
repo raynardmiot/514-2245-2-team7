@@ -1,9 +1,10 @@
-resource "aws_sqs_queue" "sqs" {
-  name                      = "cassydi-sqs"
+resource "aws_sqs_queue" "notification_queue" {
+  name = "upload-notification-queue"
+  sqs_managed_sse_enabled = true 
 }
 
-resource "aws_sns_topic_subscription" "sns_to_sqs" {
-  topic_arn = aws_sns_topic.sns.arn  # TODO: Reference SNS topic ARN
-  protocol  = "sqs"
-  endpoint  = aws_sqs_queue.sqs.arn
+resource "aws_sns_topic_subscription" "sns_upload_subscription" {
+  topic_arn = aws_sns_topic.notification_topic.arn
+  protocol = "sqs"
+  endpoint = aws_sqs_queue.notification_queue.arn
 }
