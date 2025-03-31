@@ -1,0 +1,129 @@
+.main {
+    min-width: 900px;
+    width: 70vw;
+    max-width: 1100px;
+
+    height: 40vh;
+    min-height: 600px;
+
+    border-radius: 20px;
+    box-shadow: 0 0 25px #ded3c9;
+    backdrop-filter: blur(20px);
+    background-color: none;
+    /* margin: auto; */
+    
+    display: grid;
+    grid-template-columns: auto 50%;    
+    overflow: hidden;
+  
+}
+
+@media screen and (max-width: 900px) {
+    .main {
+        min-width: 100vw;
+        /* width: 100vw; */
+        height: 80vh;
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto;
+    }
+
+    .photo img {
+        height: fill;
+        width: auto;
+        object-fit: cover;
+    }
+}
+
+.surround {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    background-color: #fff8f1;
+}
+
+.photo {
+    height: 100%;
+    width: 100%;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.photo img {
+    flex-shrink: 0;
+    /* height: fill; */
+    width: fill;
+    object-fit: contain;
+}
+
+.info {
+    /* flex: 1; */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px 10%;
+    margin: 10px;
+    /* background-color: #ebebeb3e; */
+
+    font-family: 'Open Sans';
+    line-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info h3 {
+    color: #0e0e0e50;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/OpenSans.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/OpenSansItalic.ttf');
+    font-style: italic;
+}
+
+.button {
+    font-family: 'Open Sans' !important;
+    font-size: 1.25em !important;
+    margin-top: 20px !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    background-color: #0e0e0e0e !important;
+    border: none !important;
+    box-shadow: 0 0 10px #0e0e0e50 !important;
+    transition-duration: 0.4s !important;
+    color: #0e0e0e !important;
+}
+
+.button:hover {
+    background-color: #ffa9708d;
+}
+
+.button:active {
+    transition-duration: 1ms;
+    background-color: #ef8e4ec8;
+}
+
+.uploadButton {
+    background-color: #ef8e4ec8 !important;
+    padding: 5px 10px !important;
+    border-color: #ef8e4ec8 !important;
+    color: #0e0e0e !important;
+
+}
