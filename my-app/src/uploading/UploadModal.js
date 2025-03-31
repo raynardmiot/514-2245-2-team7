@@ -27,6 +27,7 @@ function UploadModal(props) {
             reader.onload = function (e) {
                 props.setPhoto(e.target.result); 
                 // add api call to s3
+                props.getS3();
             };
             reader.readAsDataURL(file);
             toggle();

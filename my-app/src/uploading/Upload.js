@@ -81,7 +81,7 @@ function Upload() {
         </div>
 
       </div>
-      <UploadModal setPhoto={setPhoto} photo={photo} />
+      <UploadModal getS3={getS3} setPhoto={setPhoto} photo={photo} />
     </div>
 
   );
