@@ -19,6 +19,7 @@ function Upload() {
   function getS3 () {
     var s3URL;
     var imageId;
+    console.log("Running getS3");
     fetch(BASE_URL, {
       headers: {
         "Access-Control-Allow-Origin": "*"
@@ -36,6 +37,7 @@ function Upload() {
   }
 
   function postImage(url, imageId) {
+    console.log("Running postImage");
     fetch(url, {
       method: 'PUT',
       headers: {
