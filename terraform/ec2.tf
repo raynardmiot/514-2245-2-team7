@@ -57,7 +57,9 @@ resource "aws_default_vpc" "default_vpc" { }
 data "template_file" "setup" {
 	template = "${file("${path.module}/dependencies/ec2_setup.sh")}"
 
-
+	vars = {
+		api_url = aws_api_gateway_deployment.api_deployment.invoke_url
+	}
 }
 
 output "frontend_url" {
