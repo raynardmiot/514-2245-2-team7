@@ -22,6 +22,7 @@ function Upload() {
     fetch(BASE_URL)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         s3URL = data.url;
         imageId = data.imageId;
       });
@@ -40,6 +41,7 @@ function Upload() {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         // TO DO!
         // Unsure what the api returns :<
 
