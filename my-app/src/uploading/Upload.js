@@ -8,6 +8,8 @@ function Upload() {
   const [altText, setAltText] = useState("White car");
   const [photo, setPhoto] = useState(undefined);
 
+  const [jpegPhoto, setJPEGphoto] = useState(undefined);
+
   const [subreddit, setSubreddit] = useState(undefined);
   const [accuracy, setAccuracy] = useState(undefined);
 
@@ -45,9 +47,9 @@ function Upload() {
       method: 'PUT',
       headers: {
         "Access-Control-Allow-Origin": "*",
-        'Content-type': 'multipart/form-data'
+        'Content-type': 'image/jpeg'
       },
-      body: photo // Check if works
+      body: jpegPhoto // Check if works
     })
       .then(response => response.json())
       .then(data => {
@@ -91,7 +93,7 @@ function Upload() {
         </div>
 
       </div>
-      <UploadModal getS3={getS3} setPhoto={setPhoto} photo={photo} />
+      <UploadModal setJPEGphoto={setJPEGphoto} getS3={getS3} setPhoto={setPhoto} photo={photo} />
     </div>
 
   );

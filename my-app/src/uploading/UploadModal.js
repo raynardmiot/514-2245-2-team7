@@ -13,6 +13,7 @@ function UploadModal(props) {
     };
     const [file, setFile] = useState(undefined);
     const [warning, setWarning] = useState(false);
+    
 
     var reader = new FileReader();
     function onFileUpload(event) {
@@ -30,6 +31,7 @@ function UploadModal(props) {
                 props.getS3();
             };
             reader.readAsDataURL(file);
+            setJPEGphoto(file);
             toggle();
         }
         else {
