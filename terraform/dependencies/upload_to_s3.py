@@ -5,7 +5,7 @@ import uuid
 print('Loading function')
 
 s3 = boto3.client('s3')
-BUCKET_NAME = 'swen-514-7-image-bucket-2'
+BUCKET_NAME = 'swen-514-7-image-bucket-with-unique-name-2'
 
 def lambda_handler(event, context):
     image_id = str(uuid.uuid4())  

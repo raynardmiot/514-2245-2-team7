@@ -21,7 +21,8 @@ function Upload() {
     var imageId;
     console.log("Running getS3");
 
-    const url = BASE_URL + "testing/uploadImage";
+    const url = BASE_URL + "/testing/uploadImage";
+    console.log(url);
     fetch(url, {
       headers: {
         "Access-Control-Allow-Origin": "*"
