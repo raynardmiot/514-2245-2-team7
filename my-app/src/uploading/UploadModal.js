@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UploadButton from './UploadButton';
 import './upload.css';
 
 import React, {useState} from 'react';
@@ -26,7 +25,8 @@ function UploadModal(props) {
         if(file != undefined) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                props.setPhoto(e.target.result);
+                props.setPhoto(e.target.result); 
+                // add api call to s3
             };
             reader.readAsDataURL(file);
             toggle();
