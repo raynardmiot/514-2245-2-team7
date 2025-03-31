@@ -112,7 +112,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
   function_name = aws_lambda_function.upload_lambda.function_name
   principal     = "apigateway.amazonaws.com"
   
-  source_arn =  aws_api_gateway_rest_api.cassidyApi.arn
+  source_arn =  "${aws_api_gateway_rest_api.cassidyApi.execution_arn}/*"
 }
 
 
@@ -153,7 +153,7 @@ resource "aws_iam_policy" "results_policy" {
         	"dynamodb:GetItem",
 				  "dynamodb:Scan"
       ],
-      "Resource": "arn:aws:dynamodb:*:442042543689:table/*"
+      "Resource": "arn:aws:dynamodb:*:${var.account_id}:table/*"
     }]
   })
 }
@@ -222,7 +222,7 @@ resource "aws_lambda_permission" "apigw_lambda_get_results" {
   function_name = aws_lambda_function.getResults.function_name
   principal     = "apigateway.amazonaws.com"
   
-  source_arn = aws_api_gateway_rest_api.cassidyApi.arn
+  source_arn = "${aws_api_gateway_rest_api.cassidyApi.execution_arn}/*"
 }
 
 # api deployment
