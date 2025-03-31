@@ -35,10 +35,11 @@ function Upload() {
     postImage(s3URL, imageId);
   }
 
-  async function postImage(url, imageId) {
-    await fetch(url, {
+  function postImage(url, imageId) {
+    fetch(url, {
       method: 'PUT',
       headers: {
+        "Access-Control-Allow-Origin": "*",
         'Content-type': 'multipart/form-data'
       },
       body: photo // Check if works
