@@ -112,7 +112,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
   function_name = aws_lambda_function.upload_lambda.function_name
   principal     = "apigateway.amazonaws.com"
   
-  source_arn = "arn:aws:execute-api:${var.aws_region}:${var.account_id}:${aws_api_gateway_rest_api.cassidyApi.id}/${aws_api_gateway_stage.prod.stage_name}/${aws_api_gateway_method.UploadImageToS3.http_method}${aws_api_gateway_resource.uploadImage.path}"
+  source_arn =  aws_api_gateway_rest_api.cassidyApi.arn
 }
 
 
@@ -222,7 +222,7 @@ resource "aws_lambda_permission" "apigw_lambda_get_results" {
   function_name = aws_lambda_function.getResults.function_name
   principal     = "apigateway.amazonaws.com"
   
-  source_arn = "arn:aws:execute-api:${file("${path.module}/config/aws_region")}:${var.account_id}:${aws_api_gateway_rest_api.cassidyApi.id}/*/${aws_api_gateway_method.GetResults.http_method}${aws_api_gateway_resource.results.path}"
+  source_arn = aws_api_gateway_rest_api.cassidyApi.arn
 }
 
 # api deployment
