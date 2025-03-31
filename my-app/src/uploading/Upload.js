@@ -23,11 +23,11 @@ function Upload() {
 
     const url = BASE_URL + "testing/uploadImage";
     console.log(url);
-    fetch(url, {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      }
-    })
+    fetch(url
+      // , {headers: {
+      //   "Access-Control-Allow-Origin": "*"
+      // }}
+    )
       .then(response => response.json())
       .then(data => {
         console.log(data);
