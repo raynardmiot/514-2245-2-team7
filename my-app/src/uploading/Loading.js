@@ -3,7 +3,7 @@ import './loader.css';
 function Loading(props) {
     return (
         <div className="info">
-            <div class="loader"></div>
+            <div className="loader"></div>
             <br />
             <p>Processing your photo...</p>
         </div>
