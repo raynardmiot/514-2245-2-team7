@@ -5,7 +5,7 @@ import uuid
 print('Loading function')
 
 s3 = boto3.client('s3')
-BUCKET_NAME = 'swen-514-7-image-bucket-with-unique-name-2'
+BUCKET_NAME = 'swen-514-7-image-bucket-with-unique-name-test'
 
 def lambda_handler(event, context):
     image_id = str(uuid.uuid4())  
@@ -21,8 +21,15 @@ def lambda_handler(event, context):
         ExpiresIn=3600
     )
 
-    return json.dumps({
+    return {
+        "statusCode": 200,
+        "headers": {
+             "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+                "Access-Control-Allow-Headers": "Content-Type"
+        },
+        "body": json.dumps({
             "imageId": image_id,
             "url": upload_url  
         })
-
+    }
