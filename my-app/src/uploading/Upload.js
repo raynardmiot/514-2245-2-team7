@@ -81,9 +81,6 @@ function Upload() {
           })
         .then(data => {
           console.log(data);
-
-            // if data not empty
-          clearInterval(myInterval);
           
           setLoading(false);
             // setAccuracy(data.accuracy);
@@ -92,7 +89,7 @@ function Upload() {
         .catch((error) => {
           console.log("retrieveImage", error.message);
           if(error.message == "Item not found") { // 404 case
-            var myTimeout = setInterval(poll(url), 500);
+            setTimeout(poll(url), 500);
           }
         })
   }
