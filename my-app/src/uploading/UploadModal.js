@@ -31,7 +31,7 @@ function UploadModal(props) {
                 props.getS3();
             };
             reader.readAsDataURL(file);
-            setJPEGphoto(file);
+            props.setJPEGphoto(file);
             toggle();
         }
         else {
