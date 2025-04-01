@@ -16,13 +16,23 @@ def lambda_handler(event, context):
             'Key': file_name
         }
     )
+
+    print(response)
     
+    body = {
+        'Key': response['Item']['Key'],
+        'Labels': [{
+            'Name': label['Name'],
+            'Confidence': float(label['Confidence'])}
+            for label in response['Item']['Labels']
+        ]
+    }
+
     return {
-        "isBase64Encoded": False,  
         "statusCode": 200,
         "headers": {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*" 
         },
-       "body": json.dumps(response['Item'])
+       "body": body
     }
