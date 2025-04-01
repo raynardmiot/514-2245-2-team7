@@ -1,14 +1,14 @@
 import './upload.css';
 import './loader.css';
 
-DB_NAME = 'CatImageLabels'
-
+import {Button} from 'reactstrap';
 
 function Loading(props) {
-    imageName = "catImage.jpg";
+    const DB_NAME = 'CatImageLabels';
+    const imageName = "catImage.jpg";
 
     const BASE_URL = process.env.REACT_APP_BASE_API_URL;
-    url = BASE_URL + "testing/getResults?file_name=" + imageName
+    const url = BASE_URL + "testing/getResults?file_name=" + imageName
     
     function poll() {
         fetch(url, {
