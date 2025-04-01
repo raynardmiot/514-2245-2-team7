@@ -53,16 +53,10 @@ function Upload() {
         'Content-type': 'image/jpeg'
       },
       body: photo // Check if works
+    }).then(() => {
+      const pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId;
+      poll(pollingURL);
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        // TO DO!
-        // Unsure what the api returns :<
-
-        // subreddit;
-        // accuracy;
-      })
       .catch((reason) => {
         console.log("postImage", reason);
       })
@@ -74,7 +68,7 @@ function Upload() {
 
   const url = BASE_URL + "testing/getResults?file_name=" + imageName
   
-  function poll() {
+  function poll(url) {
       fetch(url, {
           method: 'GET',
           headers: {
@@ -88,6 +82,7 @@ function Upload() {
         })      
         .catch((reason) => {
           console.log("retrieveImage", reason);
+          poll(url);
         })
   }
 
