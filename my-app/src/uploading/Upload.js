@@ -33,18 +33,49 @@ function Upload() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        console.log(data.url);
+        console.log(data['url']);
         s3URL = data.url;
         imageId = data.imageId;
       });
     
     setLoading(true);
-    postImage(s3URL, imageId);
+    
+
+
+    console.log("Running postImage");
+    // console.log(jpegPhoto);
+    // console.log(photo);
+    console.log(s3URL);
+    fetch(s3URL, {
+      method: 'PUT',
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        'Content-type': 'image/jpeg'
+      },
+      body: photo // Check if works
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // TO DO!
+        // Unsure what the api returns :<
+
+        // subreddit;
+        // accuracy;
+      })
+      .catch((reason) => {
+        console.log("postImage", reason);
+      })
+
+    setLoading(false);
   }
 
   function postImage(url, imageId) {
     console.log("Running postImage");
     // console.log(jpegPhoto);
     // console.log(photo);
+    console.log(url);
     fetch(url, {
       method: 'PUT',
       headers: {
