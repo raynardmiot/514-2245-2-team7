@@ -44,7 +44,7 @@ function Upload() {
         fetch(s3URL, {
           method: 'PUT',
           headers: {
-            "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Origin": "*",
             'Content-type': 'image/jpeg'
           },
           body: photo // Check if works
