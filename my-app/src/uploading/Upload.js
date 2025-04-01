@@ -43,13 +43,13 @@ function Upload() {
 
   function postImage(url, imageId) {
     console.log("Running postImage");
-    console.log(jpegPhoto);
-    console.log(photo);
+    // console.log(jpegPhoto);
+    // console.log(photo);
     fetch(url, {
       method: 'PUT',
       headers: {
         "Access-Control-Allow-Origin": "*",
-        'Content-type': 'multipart/form-data'
+        'Content-type': 'image/jpeg'
       },
       body: photo // Check if works
     })
