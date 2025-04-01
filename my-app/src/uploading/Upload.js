@@ -60,6 +60,9 @@ function Upload() {
         // subreddit;
         // accuracy;
       })
+      .catch((reason) => {
+        console.log("postImage", reason);
+      })
 
     setLoading(true);
   }
