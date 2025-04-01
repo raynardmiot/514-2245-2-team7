@@ -75,11 +75,11 @@ function Upload() {
           if (response.ok) {
             return response.json()
           } else if (response.status === 404) {
-              throw new Error("Item not found"); // Handle 404 case
-            } else {
-              throw new Error(`HTTP error! Status: ${response.status}`); // Handle other errors
-            }
-          })
+            throw new Error("Item not found"); // Handle 404 case
+          } else {
+            throw new Error(`HTTP error! Status: ${response.status}`); // Handle other errors
+          }
+        })
         .then(data => {
           console.log(data);
           

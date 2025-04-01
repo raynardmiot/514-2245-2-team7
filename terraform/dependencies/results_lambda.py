@@ -21,8 +21,9 @@ def lambda_handler(event, context):
         "isBase64Encoded": False,  
         "statusCode": 200,
         "headers": {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*" 
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT",
+            "Access-Control-Allow-Headers": "Content-Type"
         },
        "body": json.dumps(response['Item'])
     }
