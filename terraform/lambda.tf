@@ -38,13 +38,13 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
                 ]
             },
             {
-                "Effect": "Allow",
                 "Action": [
-                    "sqs:ReceiveMessage",
-                    "sqs:DeleteMessage",
-                    "sqs:GetQueueAttributes"
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
                 ],
-                "Resource": aws_sqs_queue.notification_queue.arn
+                "Effect": "Allow",
+                "Resource": "arn:aws:logs:*:*:*"
             }
         ]
     })
@@ -71,6 +71,7 @@ resource "aws_lambda_function" "cat_sender_lambda" {
     handler          = "cat_sender.lambda_handler"
     source_code_hash = data.archive_file.output.output_base64sha256
     runtime          = "python3.11"
+    layers           = [ aws_lambda_layer_version.python_modules.id ]
 
     timeout          = 10
 
@@ -82,12 +83,19 @@ resource "aws_lambda_function" "cat_sender_lambda" {
     }
 }
 
-#SSQ Trigger
-resource "aws_lambda_event_source_mapping" "sqs_trigger" {
-    event_source_arn = aws_sqs_queue.notification_queue.arn
-    function_name    = aws_lambda_function.cat_sender_lambda.arn
-    batch_size       = 10
-    enabled          = true
+// S3 Trigger
+resource "aws_lambda_permission" "s3_trigger" {
+  statement_id = "AllowExecutionFromS3Bucket"
+  action = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.cat_sender_lambda.arn
+  principal = "s3.amazonaws.com"
+  source_arn = aws_s3_bucket.s3.arn
+}
 
-    depends_on = [ aws_iam_role_policy_attachment.attachment ]
+// Layer to allow Lambda to use Python requests module
+resource "aws_lambda_layer_version" "python_modules" {
+  filename = "dependencies/python_modules.zip"
+  layer_name = "python-modules"
+
+  compatible_runtimes = [ "python3.11", "python3.12", "python3.13" ]
 }
