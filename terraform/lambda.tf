@@ -72,6 +72,8 @@ resource "aws_lambda_function" "cat_sender_lambda" {
     source_code_hash = data.archive_file.output.output_base64sha256
     runtime          = "python3.11"
 
+    timeout          = 10
+
     environment {
         variables = {
             REKOG_PROJECT_ARN = var.rekog_project_arn
