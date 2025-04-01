@@ -166,6 +166,13 @@ resource "aws_lambda_function" "getResults" {
   handler       = "results_lambda.lambda_handler"
   filename      = "dependencies/results_lambda.zip"
   source_code_hash = filebase64sha256("dependencies/results_lambda.zip")
+
+  environment {
+    variables = {
+      REKOG_PROJECT_ARN = var.rekog_project_arn
+      DYNAMODB_TABLE_ARN = aws_dynamodb_table.labels_table.arn
+    }
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
