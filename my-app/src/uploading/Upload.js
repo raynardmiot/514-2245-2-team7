@@ -33,6 +33,8 @@ function Upload() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        console.log(data.url);
+        console.log(data['url']);
         s3URL = data.url;
         imageId = data.imageId;
       });
@@ -40,12 +42,12 @@ function Upload() {
     setLoading(true);
     
 
-    
+
     console.log("Running postImage");
     // console.log(jpegPhoto);
     // console.log(photo);
-    console.log(url);
-    fetch(url, {
+    console.log(s3URL);
+    fetch(s3URL, {
       method: 'PUT',
       headers: {
         "Access-Control-Allow-Origin": "*",
