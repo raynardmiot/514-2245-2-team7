@@ -45,6 +45,7 @@ function Upload() {
     console.log("Running postImage");
     // console.log(jpegPhoto);
     // console.log(photo);
+    console.log(url);
     fetch(url, {
       method: 'PUT',
       headers: {
