@@ -36,7 +36,7 @@ function Upload() {
         imageId = data.imageId;
       }).then(() => {
         setLoading(true);
-        postImage(s3URL, imageID)
+        postImage(s3URL, imageId)
       });
 
   }
