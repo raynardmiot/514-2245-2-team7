@@ -71,14 +71,27 @@ function Upload() {
   function poll(url) {
       fetch(url, {
           method: 'GET',
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        }).then(response => response.json())
+          // headers: {
+          //   "Access-Control-Allow-Origin": "*",
+          // },
+        }).then(response => {
+          if (response.ok) {
+            return response.json()
+          } else if (response.status === 404) {
+              throw new Error("Item not found"); // Handle 404 case
+            } else {
+              throw new Error(`HTTP error! Status: ${response.status}`); // Handle other errors
+            }
+          })
         .then(data => {
           console.log(data);
-          // subreddit;
-          // accuracy;
+
+            // if data not empty
+          clearInterval(myInterval);
+          
+          setLoading(false);
+            // setAccuracy(data.accuracy);
+            // setSubreddit(data.subreddit);
         })      
         .catch((reason) => {
           console.log("retrieveImage", reason);
@@ -88,6 +101,8 @@ function Upload() {
 
   function loadRight() {
     if (loading) {
+      var myInterval = setInterval(poll, 5000);
+
       return <Loading />
     }
     else {
