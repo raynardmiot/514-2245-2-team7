@@ -1,8 +1,10 @@
 import json
 import boto3
 from decimal import Decimal
+import urllib.parse
 import os
 
+s3 = boto3.client('s3')
 rekognition = boto3.client('rekognition')
 dynamodb = boto3.resource('dynamodb')
 
@@ -19,15 +21,8 @@ def lambda_handler(event, context):
     label_info = {}
 
     for record in event['Records']:
-        # Get SQS message
-        # Example message:
-        # {
-        #     "bucket": "the-bucket-name",
-        #     "key": "images/the-cat.jpg"
-        # }
-        message_body = json.loads(record['body'])
-        bucket = message_body['bucket']
-        key = message_body['key']
+        bucket = record['s3']['bucket']['name']
+        key = urllib.parse.unquote_plus(record['s3']['object']['key'], encoding='utf-8')
         
         print(f"Processing image: s3://{bucket}/{key}")
         
