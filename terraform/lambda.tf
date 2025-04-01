@@ -71,6 +71,7 @@ resource "aws_lambda_function" "cat_sender_lambda" {
     handler          = "cat_sender.lambda_handler"
     source_code_hash = data.archive_file.output.output_base64sha256
     runtime          = "python3.11"
+    layers           = [ aws_lambda_layer_version.python_modules.id ]
 
     environment {
         variables = {
@@ -87,4 +88,12 @@ resource "aws_lambda_permission" "s3_trigger" {
   function_name = aws_lambda_function.cat_sender_lambda.arn
   principal = "s3.amazonaws.com"
   source_arn = aws_s3_bucket.s3.arn
+}
+
+// Layer to allow Lambda to use Python requests module
+resource "aws_lambda_layer_version" "python_modules" {
+  filename = "dependencies/python_modules.zip"
+  layer_name = "python-modules"
+
+  compatible_runtimes = [ "python3.11", "python3.12", "python3.13" ]
 }
