@@ -25,11 +25,7 @@ function Upload() {
 
     const url = BASE_URL + "testing/uploadImage";
     console.log(url);
-    fetch(url
-      // , {headers: {
-      //   "Access-Control-Allow-Origin": "*"
-      // }}
-    )
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -44,7 +40,7 @@ function Upload() {
         fetch(s3URL, {
           method: 'PUT',
           headers: {
-            // "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "*",
             'Content-type': 'image/jpeg'
           },
           body: photo // Check if works
