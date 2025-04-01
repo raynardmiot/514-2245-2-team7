@@ -18,7 +18,7 @@ function Upload() {
   const BASE_URL = process.env.REACT_APP_BASE_API_URL;
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
 
-  function getS3 () {
+  function getS3() {
     var s3URL;
     var imageId;
     console.log("Running getS3");
@@ -37,38 +37,34 @@ function Upload() {
         console.log(data['url']);
         s3URL = data.url;
         imageId = data.imageId;
+      }).then(() => {
+        setLoading(true);
+        console.log("Running postImage");
+        console.log(s3URL);
+        fetch(s3URL, {
+          method: 'PUT',
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            'Content-type': 'image/jpeg'
+          },
+          body: photo // Check if works
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            // TO DO!
+            // Unsure what the api returns :<
+
+            // subreddit;
+            // accuracy;
+          })
+          .catch((reason) => {
+            console.log("postImage", reason);
+          })
+
+        setLoading(false);
       });
-    
-    setLoading(true);
-    
 
-
-    console.log("Running postImage");
-    // console.log(jpegPhoto);
-    // console.log(photo);
-    console.log(s3URL);
-    fetch(s3URL, {
-      method: 'PUT',
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        'Content-type': 'image/jpeg'
-      },
-      body: photo // Check if works
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        // TO DO!
-        // Unsure what the api returns :<
-
-        // subreddit;
-        // accuracy;
-      })
-      .catch((reason) => {
-        console.log("postImage", reason);
-      })
-
-    setLoading(false);
   }
 
   function postImage(url, imageId) {
@@ -107,7 +103,7 @@ function Upload() {
     else {
       return (
         <>
-          <h1>r/{subreddit != undefined ? subreddit : "WhiteCats" }</h1>
+          <h1>r/{subreddit != undefined ? subreddit : "WhiteCats"}</h1>
           <h3>Subreddit</h3>
 
           <br />
