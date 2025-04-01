@@ -2,6 +2,7 @@ import './upload.css';
 import UploadSection from './UploadSection';
 import UploadModal from './UploadModal';
 import React, { useState } from 'react';
+import {Button} from 'reactstrap';
 import Loading from './Loading';
 
 function Upload() {
@@ -96,6 +97,27 @@ function Upload() {
     setLoading(true);
   }
 
+  const imageName = "catImage.jpg";
+
+  const url = BASE_URL + "testing/getResults?file_name=" + imageName
+  
+  function poll() {
+      fetch(url, {
+          method: 'GET',
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }).then(response => response.json())
+        .then(data => {
+          console.log(data);
+          // subreddit;
+          // accuracy;
+        })      
+        .catch((reason) => {
+          console.log("retrieveImage", reason);
+        })
+  }
+
   function loadRight() {
     if (loading) {
       return <Loading />
@@ -109,6 +131,7 @@ function Upload() {
           <br />
           <h1>{accuracy != undefined ? accuracy : "76.77"}%</h1>
           <h3>Accuracy</h3>
+          <Button className="button pollButton" onClick={() => poll()}>Poll</Button>
         </>
 
       )
