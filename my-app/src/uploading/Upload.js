@@ -36,7 +36,7 @@ function Upload() {
         imageId = data.imageId;
       }).then(() => {
         setLoading(true);
-        postImage(s3URL, imageId)
+        postImage(s3URL, imageId); // Call S3 
       });
 
   }
@@ -69,12 +69,8 @@ function Upload() {
   const url = BASE_URL + "testing/getResults?file_name=" + imageName
   
   function poll(url) {
-      fetch(url, {
-          method: 'GET',
-          // headers: {
-          //   "Access-Control-Allow-Origin": "*",
-          // },
-        }).then(response => {
+      fetch(url)
+        .then(response => {
           if (response.ok) {
             return response.json()
           } else if (response.status === 404) {
@@ -93,9 +89,11 @@ function Upload() {
             // setAccuracy(data.accuracy);
             // setSubreddit(data.subreddit);
         })      
-        .catch((reason) => {
-          console.log("retrieveImage", reason);
-          poll(url);
+        .catch((error) => {
+          console.log("retrieveImage", error.message);
+          if(error.message == "Item not found") { // 404 case
+            var myTimeout = setInterval(poll(url), 500);
+          }
         })
   }
 
