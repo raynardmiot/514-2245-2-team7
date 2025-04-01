@@ -68,8 +68,9 @@ function Upload() {
 
   const url = BASE_URL + "testing/getResults?file_name=" + imageName
   
-  function poll(url) {
-      fetch(url)
+  function poll(pollingURL) {
+      console.log(pollingURL);
+      fetch(pollingURL)
         .then(response => {
           if (response.ok) {
             return response.json()
@@ -89,7 +90,7 @@ function Upload() {
         .catch((error) => {
           console.log("retrieveImage", error.message);
           if(error.message == "Item not found") { // 404 case
-            setTimeout(poll(url), 500);
+            setTimeout(poll(pollingURL), 500);
           }
         })
   }
