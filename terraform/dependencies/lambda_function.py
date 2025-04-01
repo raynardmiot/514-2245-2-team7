@@ -21,11 +21,8 @@ def lambda_handler(event, context):
         ExpiresIn=3600
     )
 
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
+    return json.dumps({
             "imageId": image_id,
             "url": upload_url  
         })
-    }
 
