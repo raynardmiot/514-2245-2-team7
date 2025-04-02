@@ -1,10 +1,6 @@
 resource "aws_s3_bucket" "s3" {
-<<<<<<< Updated upstream
 	bucket = "swen-514-7-image-bucket-with-unique-name-2"
   force_destroy = true
-=======
-	bucket = "swen-514-7-image-bucket-with-unique-name-151"
->>>>>>> Stashed changes
 }
 
 resource "aws_s3_bucket_policy" "allow_access_from_other_services" {
