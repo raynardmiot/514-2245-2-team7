@@ -42,3 +42,13 @@ data "aws_iam_policy_document" "sns_s3_policy_document" {
     resources = [ aws_sns_topic.notification_topic.arn ]
   }
 }
+
+resource "aws_sns_topic_subscription" "email_subscriber" {
+  topic_arn = aws_sns_topic.notification_topic.arn
+  protocol = "email"
+  endpoint = "rhm8082@g.rit.edu"
+}
+
+output "sns_topic_arn" {
+  value = aws_sns_topic.notification_topic.arn
+}
