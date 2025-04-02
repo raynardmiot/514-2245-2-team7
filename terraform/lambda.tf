@@ -81,13 +81,13 @@ resource "aws_lambda_function" "cat_sender_lambda" {
     }
 }
 
-// S3 Trigger
-resource "aws_lambda_permission" "s3_trigger" {
-  statement_id = "AllowExecutionFromS3Bucket"
+// SNS trigger for Lambda
+resource "aws_lambda_permission" "sns_trigger" {
+  statement_id = "AllowExecutionFromSNS"
   action = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.cat_sender_lambda.arn
-  principal = "s3.amazonaws.com"
-  source_arn = aws_s3_bucket.s3.arn
+  function_name = aws_lambda_function.cat_sender_lambda.function_name
+  principal = "sns.amazonaws.com"
+  source_arn = aws_sns_topic.notification_topic.arn
 }
 
 // Layer to allow Lambda to use Python requests module
