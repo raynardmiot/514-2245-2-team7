@@ -4,7 +4,9 @@ resource "aws_instance" "ec2" {
 	vpc_security_group_ids = [ aws_security_group.ec2_security_group.id ]
 
 	// Github must remain public for setup script to work
-	user_data = data.template_file.setup.rendered
+	user_data = templatefile("${path.module}/dependencies/ec2_setup.sh", {
+		api_url = aws_api_gateway_deployment.api_deployment.invoke_url
+	})
 
 	tags = {
 		Name = "swen-514-7-webserver"
@@ -53,14 +55,6 @@ resource "aws_security_group_rule" "allow_outbound_traffic" {
 }
 
 resource "aws_default_vpc" "default_vpc" { }
-
-data "template_file" "setup" {
-	template = "${file("${path.module}/dependencies/ec2_setup.sh")}"
-
-	vars = {
-		api_url = aws_api_gateway_deployment.api_deployment.invoke_url
-	}
-}
 
 output "frontend_url" {
 	value = "http://${aws_instance.ec2.public_dns}:3000"
