@@ -84,8 +84,8 @@ function Upload() {
           console.log(data);
           
           setLoading(false);
-            // setAccuracy(data.accuracy);
-            // setSubreddit(data.subreddit);
+          setAccuracy(data.label.confidence.toFixed(2));
+          setSubreddit(data.label.name);
         })      
         .catch((error) => {
           console.log("retrieveImage", error.message);
