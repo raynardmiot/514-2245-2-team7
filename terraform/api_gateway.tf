@@ -1,10 +1,16 @@
+data "archive_file" "upload_lambda_output" {
+    type        = "zip"
+    source_file = "${path.module}/dependencies/lambda_function.py"
+    output_path = "${path.module}/out/lambda_function.zip"
+}
+
 resource "aws_lambda_function" "upload_lambda" {
   function_name = "generate_url"
   role          = aws_iam_role.lambda_role.arn
   runtime       = "python3.9"
   handler       = "lambda_function.lambda_handler"
-  filename      = "dependencies/lambda_function.zip"
-  source_code_hash = filebase64sha256("dependencies/lambda_function.zip")
+  filename      = data.archive_file.upload_lambda_output.output_path
+  source_code_hash = data.archive_file.upload_lambda_output.output_base64sha256
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -158,14 +164,20 @@ resource "aws_iam_policy" "results_policy" {
   })
 }
 
+data "archive_file" "results_lambda_output" {
+    type        = "zip"
+    source_file = "${path.module}/dependencies/results_lambda.py"
+    output_path = "${path.module}/out/results_lambda.zip"
+}
+
 #Lambda
 resource "aws_lambda_function" "getResults" {
   function_name = "get_recog_results"
   role          = aws_iam_role.getResults_role.arn
   runtime       = "python3.9"
   handler       = "results_lambda.lambda_handler"
-  filename      = "dependencies/results_lambda.zip"
-  source_code_hash = filebase64sha256("dependencies/results_lambda.zip")
+  filename      = data.archive_file.results_lambda_output.output_path
+  source_code_hash = data.archive_file.results_lambda_output.output_base64sha256
 
   environment {
     variables = {
