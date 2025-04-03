@@ -13,26 +13,40 @@ function UploadModal(props) {
     };
     const [file, setFile] = useState(undefined);
     const [warning, setWarning] = useState(false);
-    
+    const [wrongFileType, setWrongFileType] = useState(false);
+
 
     var reader = new FileReader();
     function onFileUpload(event) {
         if(event.target.files && event.target.files[0]) {
             setFile(event.target.files[0]);
         }
-      }
+    }
+
+    function checkFileType(file) {
+        var ext = getExtension(filename);
+        switch (ext.toLowercase()) {
+            case 'jpeg':
+                setExtension(ext);
+                return true;
+        }
+        
+        return false;
+    }
 
     function onUpload() {
         if(file != undefined) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                props.setPhoto(e.target.result); 
-                // add api call to s3
-                props.getS3();
-            };
-            reader.readAsDataURL(file);
-            props.setJPEGphoto(file);
-            toggle();
+            if (checkFileType(file)) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    props.setPhoto(e.target.result); 
+                    // add api call to s3
+                    props.getS3();
+                };
+                reader.readAsDataURL(file);
+                props.setJPEGphoto(file);
+                toggle();
+            }
         }
         else {
             setWarning(true);
@@ -48,7 +62,8 @@ function UploadModal(props) {
                 </ModalHeader>
                 <ModalBody>
                 <input onChange={(event) => onFileUpload(event)}type="file" id="input" />
-                <p className="warningText" style={{"visibility": (warning ? "visible" : "hidden")}}>Please select a photo!</p>
+                <p className="warningText" style={{"display": (warning ? "inherit" : "none")}}>Please select a photo!</p>
+                <p className="warningText" style={{"display": (wrongFileType ? "inherit" : "none")}}>Please submit a .jpeg photo</p>
                 </ModalBody>
                 <ModalFooter>
                     <Button className="button uploadButton" onClick={() => onUpload()}>Upload</Button>

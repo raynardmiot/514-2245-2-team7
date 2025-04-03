@@ -15,6 +15,7 @@ function Upload() {
   const [accuracy, setAccuracy] = useState(undefined);
 
   const [loading, setLoading] = useState(false);
+  const [extension, setExtension] = useState(undefined);
 
   const BASE_URL = process.env.REACT_APP_BASE_API_URL;
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
@@ -50,11 +51,17 @@ function Upload() {
       method: 'PUT',
       headers: {
         "Access-Control-Allow-Origin": "*",
-        'Content-type': 'image/jpeg'
+        'Content-type': 'image/' + extension
       },
       body: photo // Check if works
     }).then(() => {
-      const pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId;
+      let pollingURL;
+      if(extension == 'jpeg') {
+        pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
+      }
+      else {
+        pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
+      }
       poll(pollingURL);
     })
       .catch((reason) => {
@@ -66,7 +73,6 @@ function Upload() {
 
   const imageName = "catImage.jpg";
 
-  const url = BASE_URL + "testing/getResults?file_name=" + imageName
   
   function poll(pollingURL) {
       console.log(pollingURL);
@@ -127,7 +133,7 @@ function Upload() {
         </div>
 
       </div>
-      <UploadModal setJPEGphoto={setJPEGphoto} getS3={getS3} setPhoto={setPhoto} photo={photo} />
+      <UploadModal setExtension={setExtension} setJPEGphoto={setJPEGphoto} getS3={getS3} setPhoto={setPhoto} photo={photo} />
     </div>
 
   );
