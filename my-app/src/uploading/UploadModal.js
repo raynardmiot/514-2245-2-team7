@@ -24,13 +24,14 @@ function UploadModal(props) {
     }
 
     function checkFileType(file) {
-        var ext = getExtension(filename);
-        switch (ext.toLowercase()) {
+        const ext = file.name.split(".")[1];
+        switch (ext.toLowerCase()) {
             case 'jpeg':
-                setExtension(ext);
+                setWrongFileType(false);
+                props.setExtension(ext);
                 return true;
         }
-        
+        setWrongFileType(true);
         return false;
     }
 
