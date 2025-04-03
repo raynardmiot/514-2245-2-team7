@@ -17,6 +17,18 @@ def lambda_handler(event, context):
         }
     )
 
+    if 'Item' not in response.keys():
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 404,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },
+            "body": json.dumps("File not found")
+        }
+
     print(response)
     
     body = {
