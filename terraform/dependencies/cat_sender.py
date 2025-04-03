@@ -11,10 +11,10 @@ table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
 
-    print("## STARTING THE LAMBDA")
+    print('RECEIVED MESSAGE: ' + json.dumps(event['Records'][0], indent=2))
     label_info = {}
 
-    record = event['Records'][0]
+    record = json.loads(event['Records'][0]['Sns']['Message'])['Records'][0]
 
     bucket = record['s3']['bucket']['name']
     key = urllib.parse.unquote_plus(record['s3']['object']['key'], encoding='utf-8')
