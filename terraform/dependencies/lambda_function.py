@@ -3,7 +3,7 @@ import json, boto3, uuid, base64
 print('Loading function')
 
 s3 = boto3.client('s3')
-BUCKET_NAME = 'swen-514-7-image-bucket-with-unique-name-abc'
+BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
 
 def lambda_handler(event, context):
     print("received event")

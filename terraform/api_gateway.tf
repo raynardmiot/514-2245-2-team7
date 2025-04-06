@@ -11,6 +11,12 @@ resource "aws_lambda_function" "upload_lambda" {
   handler       = "lambda_function.lambda_handler"
   filename      = data.archive_file.upload_lambda_output.output_path
   source_code_hash = data.archive_file.upload_lambda_output.output_base64sha256
+
+  environment {
+    variables = {
+      S3_BUCKET_NAME = var.s3_bucket_name
+    }
+  }
 }
 
 resource "aws_iam_role" "lambda_role" {
