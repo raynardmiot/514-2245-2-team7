@@ -96,7 +96,7 @@ function Upload() {
         .catch((error) => {
           console.log("retrieveImage", error.message);
           if(error.message == "Item not found") { // 404 case
-            setTimeout(poll(pollingURL), 500);
+            setTimeout(poll(pollingURL), 1500);
           }
         })
   }

@@ -26,6 +26,7 @@ function UploadModal(props) {
     function checkFileType(file) {
         const ext = file.name.split(".")[1];
         switch (ext.toLowerCase()) {
+            case 'jpg':
             case 'jpeg':
                 setWrongFileType(false);
                 props.setExtension(ext);
