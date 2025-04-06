@@ -31,8 +31,8 @@ function Upload() {
     fetch(url, {
       method: "PUT",
       headers: {
-        // "Access-Control-Allow-Origin": "*",
-        'Content-type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Content-type': 'image/' + extension,
       },
       body: varPhoto.substring(23)
     })
