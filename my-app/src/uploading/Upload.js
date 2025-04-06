@@ -23,55 +23,67 @@ function Upload() {
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
 
   function getS3() {
-    var s3URL;
     var imageId;
     console.log("Running getS3");
 
     const url = BASE_URL + "testing/uploadImage";
-    console.log(url);
-    fetch(url)
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        'Content-type': 'application/json',
+      },
+      body: photo
+    })
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        console.log(data.url);
-        console.log(data['url']);
-        s3URL = data.url;
         imageId = data.imageId;
       }).then(() => {
         setLoading(true);
-        postImage(s3URL, imageId); // Call S3 
+        let pollingURL;
+        if(extension == 'jpeg') {
+          pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
+        }
+        else {
+          pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
+        }
+        poll(pollingURL);
+      })
+      .catch((reason) => {
+        console.log("postImage", reason);
       });
 
   }
 
-  function postImage(url, imageId) {
-    console.log("Running postImage");
-    // console.log(jpegPhoto);
-    // console.log(photo);
-    console.log(url);
-    fetch(url, {
-      method: 'PUT',
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        'Content-type': 'image/' + extension
-      },
-      body: photo // Check if works
-    }).then(() => {
-      let pollingURL;
-      if(extension == 'jpeg') {
-        pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
-      }
-      else {
-        pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
-      }
-      poll(pollingURL);
-    })
-      .catch((reason) => {
-        console.log("postImage", reason);
-      })
+  // function postImage(url, imageId) {
+  //   console.log("Running postImage");
+  //   // console.log(jpegPhoto);
+  //   // console.log(photo);
+  //   console.log(url);
+  //   fetch(url, {
+  //     method: 'PUT',
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Content-type': 'image/' + extension
+  //     },
+  //     body: photo // Check if works
+  //   }).then(() => {
+  //     let pollingURL;
+  //     if(extension == 'jpeg') {
+  //       pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
+  //     }
+  //     else {
+  //       pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
+  //     }
+  //     poll(pollingURL);
+  //   })
+  //     .catch((reason) => {
+  //       console.log("postImage", reason);
+  //     })
 
-    setLoading(true);
-  }
+  //   setLoading(true);
+  // }
 
   const imageName = "catImage.jpg";
 
