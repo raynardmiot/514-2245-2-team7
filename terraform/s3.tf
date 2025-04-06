@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3" {
-	bucket = "swen-514-7-image-bucket-with-unique-name-2"
+	bucket = var.s3_bucket_name
   force_destroy = true
 }
 
