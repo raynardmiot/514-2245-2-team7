@@ -1,24 +1,22 @@
-import json
-import boto3
-import uuid
+import json, boto3, uuid, base64
 
 print('Loading function')
 
 s3 = boto3.client('s3')
-BUCKET_NAME = 'swen-514-7-image-bucket-with-unique-name-2'
+BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
 
 def lambda_handler(event, context):
+    print("received event")
+    print(event)
+
     image_id = str(uuid.uuid4())  
     key = f"{uuid.uuid4()}.jpg"   
 
-    upload_url = s3.generate_presigned_url(
-        'put_object',
-        Params={
-            'Bucket': BUCKET_NAME, 
-            'Key': key, 
-            'ContentType': 'image/jpeg'  
-        },
-        ExpiresIn=3600
+    # upload image to s3
+    s3.put_object(
+        Bucket=BUCKET_NAME,
+        Key=key,
+        Body=base64.b64decode(event['body'])
     )
 
     return {
@@ -29,7 +27,6 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Headers": "Content-Type"
         },
         "body": json.dumps({
-            "imageId": image_id,
-            "url": upload_url  
+            "filename": key,
         })
     }

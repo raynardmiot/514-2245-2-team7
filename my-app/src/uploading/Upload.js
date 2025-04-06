@@ -81,7 +81,6 @@ function Upload() {
   //     .catch((reason) => {
   //       console.log("postImage", reason);
   //     })
-
   //   setLoading(true);
   // }
 
