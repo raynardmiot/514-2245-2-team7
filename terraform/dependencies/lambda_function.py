@@ -1,4 +1,4 @@
-import json, boto3, uuid, base64
+import json, boto3, uuid, base64, os
 
 print('Loading function')
 
