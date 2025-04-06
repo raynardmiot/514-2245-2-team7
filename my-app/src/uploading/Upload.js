@@ -34,7 +34,7 @@ function Upload() {
         // "Access-Control-Allow-Origin": "*",
         'Content-type': 'application/json',
       },
-      body: varPhoto
+      body: varPhoto.substring(23)
     })
       .then(response => response.json())
       .then(data => {
