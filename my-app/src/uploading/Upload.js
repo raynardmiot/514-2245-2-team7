@@ -27,7 +27,7 @@ function Upload() {
     console.log("Running getS3");
 
     const url = BASE_URL + "testing/uploadImage";
-    console.log(varPhoto);
+    console.log(varPhoto.substring(23));
     fetch(url, {
       method: "PUT",
       headers: {
