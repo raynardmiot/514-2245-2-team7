@@ -27,13 +27,14 @@ function Upload() {
     console.log("Running getS3");
 
     const url = BASE_URL + "testing/uploadImage";
+    console.log(varPhoto);
     fetch(url, {
       method: "PUT",
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Origin": "*",
         'Content-type': 'application/json',
       },
-      body: photo
+      body: varPhoto
     })
       .then(response => response.json())
       .then(data => {
