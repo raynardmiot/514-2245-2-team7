@@ -96,15 +96,13 @@ function Upload() {
         .catch((error) => {
           console.log("retrieveImage", error.message);
           if(error.message == "Item not found") { // 404 case
-            setTimeout(poll(pollingURL), 1500);
+            setTimeout(poll(pollingURL), 5000);
           }
         })
   }
 
   function loadRight() {
     if (loading) {
-      var myInterval = setInterval(poll, 5000);
-
       return <Loading />
     }
     else {
