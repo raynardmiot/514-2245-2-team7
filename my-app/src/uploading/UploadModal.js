@@ -11,7 +11,7 @@ function UploadModal(props) {
             setWarning(false);
         setModal(!modal)
     };
-    const [file, setFile] = useState(undefined);
+    var file = undefined;
     const [warning, setWarning] = useState(false);
     const [wrongFileType, setWrongFileType] = useState(false);
 
@@ -19,7 +19,7 @@ function UploadModal(props) {
     var reader = new FileReader();
     function onFileUpload(event) {
         if(event.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
+            file = event.target.files[0];
         }
     }
 

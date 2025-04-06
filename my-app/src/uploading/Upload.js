@@ -9,6 +9,8 @@ function Upload() {
   const [altText, setAltText] = useState("White car");
   const [photo, setPhoto] = useState(undefined);
 
+  var varPhoto = undefined; 
+
   const [jpegPhoto, setJPEGphoto] = useState(undefined);
 
   const [subreddit, setSubreddit] = useState(undefined);
@@ -121,6 +123,11 @@ function Upload() {
     }
   }
 
+  function uploadingPhoto(photo) {
+    varPhoto = photo;
+    setPhoto(photo);
+  }
+
 
   return (
     <div className="surround">
@@ -131,7 +138,7 @@ function Upload() {
         </div>
 
       </div>
-      <UploadModal setExtension={setExtension} setJPEGphoto={setJPEGphoto} getS3={getS3} setPhoto={setPhoto} photo={photo} />
+      <UploadModal setExtension={setExtension} setJPEGphoto={setJPEGphoto} getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
     </div>
 
   );
