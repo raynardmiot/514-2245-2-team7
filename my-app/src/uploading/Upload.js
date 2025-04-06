@@ -51,17 +51,18 @@ function Upload() {
       method: 'PUT',
       headers: {
         "Access-Control-Allow-Origin": "*",
-        'Content-type': 'image/' + extension
+        'Content-type': 'image/jpeg'
       },
       body: photo // Check if works
     }).then(() => {
       let pollingURL;
-      if(extension == 'jpeg') {
-        pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
-      }
-      else {
-        pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
-      }
+      pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
+      // if(extension == 'jpeg') {
+      //   pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
+      // }
+      // else {
+      //   pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
+      // }
       poll(pollingURL);
     })
       .catch((reason) => {
