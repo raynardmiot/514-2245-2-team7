@@ -152,16 +152,7 @@ resource "aws_api_gateway_method" "UploadImageToS3" {
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_method_response" "cors_method_response_200" {
-    rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
-    resource_id   = aws_api_gateway_resource.uploadImage.id
-    http_method   = aws_api_gateway_method.UploadImageToS3Options.http_method
-    status_code   = "200"
-    response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = true
-    }
-    depends_on = ["aws_api_gateway_method.UploadImageToS3"]
-}
+
 
 resource "aws_api_gateway_integration" "lambda_integration" {
   rest_api_id             = aws_api_gateway_rest_api.cassidyApi.id
