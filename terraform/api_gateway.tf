@@ -102,6 +102,49 @@ resource "aws_api_gateway_resource" "uploadImage" {
   path_part   = "uploadImage"
 }
 
+resource "aws_api_gateway_method" "UploadImageToS3Options" {
+  rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
+  resource_id   = aws_api_gateway_resource.uploadImage.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "options_200" {
+    rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
+    resource_id   = aws_api_gateway_resource.uploadImage.id
+    http_method   = aws_api_gateway_method.UploadImageToS3Options.http_method
+    status_code   = "200"
+    response_models = {
+        "application/json" = "Empty"
+    }
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Headers" = true,
+        "method.response.header.Access-Control-Allow-Methods" = true,
+        "method.response.header.Access-Control-Allow-Origin" = true
+    }
+    depends_on = ["aws_api_gateway_method.UploadImageToS3Options"]
+}
+resource "aws_api_gateway_integration" "options_integration" {
+    rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
+    resource_id   = aws_api_gateway_resource.uploadImage.id
+    http_method   = aws_api_gateway_method.UploadImageToS3Options.http_method
+    type          = "MOCK"
+    depends_on = ["aws_api_gateway_method.UploadImageToS3Options"]
+}
+
+resource "aws_api_gateway_integration_response" "options_integration_response" {
+    rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
+    resource_id   = aws_api_gateway_resource.uploadImage.id
+    http_method   = aws_api_gateway_method.UploadImageToS3Options.http_method
+    status_code   = aws_api_gateway_method_response.options_200.status_code
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Access-Control-Allow-Origin'",
+        "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT'",
+        "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    }
+    depends_on = ["aws_api_gateway_method.UploadImageToS3Options"]
+}
+
 resource "aws_api_gateway_method" "UploadImageToS3" {
   rest_api_id   = aws_api_gateway_rest_api.cassidyApi.id
   resource_id   = aws_api_gateway_resource.uploadImage.id
@@ -159,6 +202,7 @@ resource "aws_api_gateway_integration" "lambda_integration" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.upload_lambda.invoke_arn
+  depends_on    = ["aws_api_gateway_method.UploadImageToS3", "aws_lambda_function.upload_lambda"]
 }
 
 resource "aws_lambda_permission" "apigw_lambda" {
