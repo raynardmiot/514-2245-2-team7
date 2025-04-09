@@ -57,37 +57,8 @@ function Upload() {
 
   }
 
-  // function postImage(url, imageId) {
-  //   console.log("Running postImage");
-  //   // console.log(jpegPhoto);
-  //   // console.log(photo);
-  //   console.log(url);
-  //   fetch(url, {
-  //     method: 'PUT',
-  //     headers: {
-  //       "Access-Control-Allow-Origin": "*",
-  //       'Content-type': 'image/' + extension
-  //     },
-  //     body: photo // Check if works
-  //   }).then(() => {
-  //     let pollingURL;
-  //     if(extension == 'jpeg') {
-  //       pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
-  //     }
-  //     else {
-  //       pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
-  //     }
-  //     poll(pollingURL);
-  //   })
-  //     .catch((reason) => {
-  //       console.log("postImage", reason);
-  //     })
-  //   setLoading(true);
-  // }
-
   const imageName = "catImage.jpg";
 
-  
   function poll(pollingURL) {
       console.log(pollingURL);
       fetch(pollingURL)
