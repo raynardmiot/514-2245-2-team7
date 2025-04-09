@@ -23,7 +23,6 @@ function Upload() {
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
 
   function getS3() {
-    var imageId;
     console.log("Running getS3");
 
     const url = BASE_URL + "testing/uploadImage/";
@@ -39,16 +38,12 @@ function Upload() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        imageId = data.imageId;
-      }).then(() => {
+        console.log(data.filename);
+        console.log(data['filename']);
+        const imageId = data.filename;
+
         setLoading(true);
-        let pollingURL;
-        if(extension == 'jpeg') {
-          pollingURL = BASE_URL + "testing/getResults/?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
-        }
-        else {
-          pollingURL = BASE_URL + "testing/getResults/?file_name=" + imageId + '.' + extension;
-        }
+        let pollingURL = BASE_URL + "testing/getResults/?file_name=" + imageId;
         poll(pollingURL);
       })
       .catch((reason) => {
@@ -56,8 +51,6 @@ function Upload() {
       });
 
   }
-
-  const imageName = "catImage.jpg";
 
   function poll(pollingURL) {
       console.log(pollingURL);
@@ -99,7 +92,6 @@ function Upload() {
           <br />
           <h1>{accuracy != undefined ? accuracy : "76.77"}%</h1>
           <h3>Accuracy</h3>
-          <Button className="button pollButton" onClick={() => poll()}>Poll</Button>
         </>
 
       )
