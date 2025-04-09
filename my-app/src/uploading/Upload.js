@@ -26,13 +26,13 @@ function Upload() {
     var imageId;
     console.log("Running getS3");
 
-    const url = BASE_URL + "testing/uploadImage";
+    const url = BASE_URL + "testing/uploadImage/";
     console.log(varPhoto.substring(23));
     fetch(url, {
       method: "PUT",
       headers: {
         "Access-Control-Allow-Origin": "*",
-        'Content-type': 'image/' + extension,
+        'Content-type': 'text/plain',
       },
       body: varPhoto.substring(23)
     })
@@ -44,10 +44,10 @@ function Upload() {
         setLoading(true);
         let pollingURL;
         if(extension == 'jpeg') {
-          pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
+          pollingURL = BASE_URL + "testing/getResults/?file_name=" + imageId + '.jpg'; // for some reason jpeg gets converted to jpg
         }
         else {
-          pollingURL = BASE_URL + "testing/getResults?file_name=" + imageId + '.' + extension;
+          pollingURL = BASE_URL + "testing/getResults/?file_name=" + imageId + '.' + extension;
         }
         poll(pollingURL);
       })
