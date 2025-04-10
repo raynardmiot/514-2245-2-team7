@@ -4,11 +4,14 @@ import './loader.css';
 function Loading(props) {
 
     return (
-        <div className="info">
-            <div className="loader"></div>
-            <br />
-            <p>Processing your photo...</p>
+        <div className="infoContainer">
+            <div className="info">
+                <div className="loader"></div>
+                <br />
+                <p>Processing your photo...</p>
+            </div>
         </div>
+        
         
     )
 }

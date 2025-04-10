@@ -29,7 +29,6 @@ function UploadModal(props) {
             case 'jpg':
             case 'jpeg':
                 setWrongFileType(false);
-                props.setExtension(ext);
                 return true;
         }
         setWrongFileType(true);
@@ -46,7 +45,6 @@ function UploadModal(props) {
                     props.getS3();
                 };
                 reader.readAsDataURL(file);
-                props.setJPEGphoto(file);
                 toggle();
             }
         }

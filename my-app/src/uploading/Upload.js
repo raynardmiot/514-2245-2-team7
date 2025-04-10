@@ -11,13 +11,8 @@ function Upload() {
 
   var varPhoto = undefined; 
 
-  const [jpegPhoto, setJPEGphoto] = useState(undefined);
-
-  const [subreddit, setSubreddit] = useState(undefined);
-  const [accuracy, setAccuracy] = useState(undefined);
-
+  const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "whitecats", Confidence: 98.77}])
   const [loading, setLoading] = useState(false);
-  const [extension, setExtension] = useState(undefined);
 
   const BASE_URL = process.env.REACT_APP_BASE_API_URL;
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
@@ -30,7 +25,6 @@ function Upload() {
     fetch(url, {
       method: "PUT",
       headers: {
-        // "Access-Control-Allow-Origin": "*",
         'Content-type': 'text/plain',
       },
       body: varPhoto.substring(23)
@@ -68,8 +62,7 @@ function Upload() {
           console.log(data);
           
           setLoading(false);
-          setAccuracy(data.Labels[0].Confidence.toFixed(2));
-          setSubreddit(data.Labels[0].Name);
+          setResults(data.Labels);
         })      
         .catch((error) => {
           console.log("retrieveImage", error.message);
@@ -79,21 +72,33 @@ function Upload() {
         })
   }
 
+  function loadResults() {
+    var rendered = [];
+    for (let result of results) {
+      rendered.push(<div className="info">
+        <div>
+          <h1>r/{result.Name}</h1>
+          <h3>Subreddit</h3>
+        </div>
+        
+        <div>
+          <h1>{result.Confidence.toFixed(2)}%</h1>
+          <h3>Accuracy</h3>
+        </div>
+      </div>)
+    }
+    return rendered;
+  }
+
   function loadRight() {
     if (loading) {
       return <Loading />
     }
     else {
       return (
-        <>
-          <h1>r/{subreddit != undefined ? subreddit : "WhiteCats"}</h1>
-          <h3>Subreddit</h3>
-
-          <br />
-          <h1>{accuracy != undefined ? accuracy : "76.77"}%</h1>
-          <h3>Accuracy</h3>
-        </>
-
+        <div className="infoContainer">
+          {loadResults()}
+        </div>
       )
     }
   }
@@ -108,12 +113,12 @@ function Upload() {
     <div className="surround">
       <div className="main">
         <UploadSection photo={photo} altText={altText} />
-        <div className="info">
+        <div className="center">
           {loadRight()}
         </div>
 
       </div>
-      <UploadModal setExtension={setExtension} setJPEGphoto={setJPEGphoto} getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
+      <UploadModal getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
     </div>
 
   );
