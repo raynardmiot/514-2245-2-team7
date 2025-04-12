@@ -68,8 +68,9 @@ function Upload() {
               count +=1
             }
           }
-          
-          if(count == data.Labels.lenght){
+
+
+          if(count == data.Labels.length){
             console.log("not image of car")
             setinvalidImage(true)
           }else{
@@ -94,7 +95,8 @@ function Upload() {
           <h1>Image provided is not the image of a cat</h1>
         </div>
       </div>)
-    }else{
+    }
+    else{
       for (let result of results) {
         rendered.push(<div className="info">
           <div>
