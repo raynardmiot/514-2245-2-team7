@@ -68,8 +68,6 @@ function Upload() {
               count +=1
             }
           }
-
-
           if(count == data.Labels.length){
             console.log("not image of car")
             setinvalidImage(true)
@@ -97,6 +95,11 @@ function Upload() {
       </div>)
     }
     else{
+      if(results.length == 0){
+        rendered.push(<div>
+           <h1>Model could not determine what subreddit the image belongs to </h1>
+        </div>)
+      }
       for (let result of results) {
         rendered.push(<div className="info">
           <div>
