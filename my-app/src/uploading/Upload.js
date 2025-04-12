@@ -59,10 +59,20 @@ function Upload() {
           }
         })
         .then(data => {
-          console.log(data);
-          
           setLoading(false);
-          setResults(data.Labels);
+          let count  = 0;
+          for(let result of data.Labels){
+            if(result.Confidence < 92){
+              console.log("not image of cat")
+              count +=1
+            }
+          }
+          if(count == data.Labels.lenght){
+            console.log("not image of car")
+          }else{
+            setResults(data.Labels);
+          }
+        
         })      
         .catch((error) => {
           console.log("retrieveImage", error.message);
