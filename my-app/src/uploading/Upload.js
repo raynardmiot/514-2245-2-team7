@@ -13,6 +13,7 @@ function Upload() {
 
   const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "whitecats", Confidence: 98.77}])
   const [loading, setLoading] = useState(false);
+  const [invalidImage, setinvalidImage] = useState(false)
 
   const BASE_URL = process.env.REACT_APP_BASE_API_URL;
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
@@ -67,12 +68,14 @@ function Upload() {
               count +=1
             }
           }
+          
           if(count == data.Labels.lenght){
             console.log("not image of car")
+            setinvalidImage(true)
           }else{
+            setinvalidImage(false)
             setResults(data.Labels);
           }
-        
         })      
         .catch((error) => {
           console.log("retrieveImage", error.message);
@@ -84,18 +87,27 @@ function Upload() {
 
   function loadResults() {
     var rendered = [];
-    for (let result of results) {
-      rendered.push(<div className="info">
+    
+    if(invalidImage){
+      rendered.push(<div className='info'>
         <div>
-          <h1>r/{result.Name}</h1>
-          <h3>Subreddit</h3>
-        </div>
-        
-        <div>
-          <h1>{result.Confidence.toFixed(2)}%</h1>
-          <h3>Accuracy</h3>
+          <h1>Image provided is not the image of a cat</h1>
         </div>
       </div>)
+    }else{
+      for (let result of results) {
+        rendered.push(<div className="info">
+          <div>
+            <h1>r/{result.Name}</h1>
+            <h3>Subreddit</h3>
+          </div>
+          
+          <div>
+            <h1>{result.Confidence.toFixed(2)}%</h1>
+            <h3>Accuracy</h3>
+          </div>
+        </div>)
+      }
     }
     return rendered;
   }
