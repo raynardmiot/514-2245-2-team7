@@ -11,7 +11,7 @@ function Upload() {
 
   var varPhoto = undefined; 
 
-  const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "whitecats", Confidence: 98.77}])
+  const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "WhiteCats", Confidence: 98.77}])
   const [loading, setLoading] = useState(false);
   const [invalidImage, setinvalidImage] = useState(false)
 
@@ -107,8 +107,8 @@ function Upload() {
       for (let result of results) {
         rendered.push(<div className="info">
           <div>
-            <h1>r/{result.Name}</h1>
-            <h3>Subreddit</h3>
+          <h1><a href={`https://reddit.com/r/${result.Name}`}>r/{result.Name}</a></h1>
+          <h3>Subreddit</h3>
           </div>
           
           <div>
