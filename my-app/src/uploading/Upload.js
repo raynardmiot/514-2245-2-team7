@@ -11,8 +11,9 @@ function Upload(props) {
 
   var varPhoto = undefined; 
 
-  const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "whitecats", Confidence: 98.77}])
+  const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "WhiteCats", Confidence: 98.77}])
   const [loading, setLoading] = useState(false);
+  const [invalidImage, setinvalidImage] = useState(false)
 
   const BASE_URL = process.env.REACT_APP_BASE_API_URL;
   console.log(process.env.REACT_APP_BASE_API_URL); // Environment Variable for API URL
@@ -60,10 +61,23 @@ function Upload(props) {
           }
         })
         .then(data => {
-          console.log(data);
-          
           setLoading(false);
-          setResults(data.Labels);
+          let count  = 0;
+          for(let result of data.Labels){
+            if(result.Confidence < 92){
+              console.log("not image of cat")
+              count +=1
+            }
+          }
+          if(count == data.Labels.length){
+            
+            console.log("not image of car")
+            setinvalidImage(true)
+
+          }else{
+            setinvalidImage(false)
+            setResults(data.Labels);
+          }
         })      
         .catch((error) => {
           console.log("retrieveImage", error.message);
@@ -75,18 +89,35 @@ function Upload(props) {
 
   function loadResults() {
     var rendered = [];
-    for (let result of results) {
-      rendered.push(<div className="info">
+    
+    if(invalidImage){
+      rendered.push(<div className='info'>
         <div>
-          <h1>r/{result.Name}</h1>
-          <h3>Subreddit</h3>
-        </div>
-        
-        <div>
-          <h1>{result.Confidence.toFixed(2)}%</h1>
-          <h3>Accuracy</h3>
+          <h1>Image provided is not the image of a cat</h1>
         </div>
       </div>)
+    }
+
+    else{
+
+      if(results.length == 0){
+        rendered.push(<div>
+           <h1>Model could not determine what subreddit the image belongs to </h1>
+        </div>)
+      }
+      for (let result of results) {
+        rendered.push(<div className="info">
+          <div>
+          <h1><a href={`https://reddit.com/r/${result.Name}`}>r/{result.Name}</a></h1>
+          <h3>Subreddit</h3>
+          </div>
+          
+          <div>
+            <h1>{result.Confidence.toFixed(2)}%</h1>
+            <h3>Accuracy</h3>
+          </div>
+        </div>)
+      }
     }
     return rendered;
   }
