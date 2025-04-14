@@ -68,7 +68,7 @@ function UploadModal(props) {
                 </ModalBody>
                 <ModalFooter>
                     <Button className="button uploadButton" onClick={() => {onUpload();}}>Upload</Button>
-                    <Button className="button cancelButton">Cancel</Button>
+                    <Button className="button cancelButton" style={{borderWidth: 0}}>Cancel</Button>
                 </ModalFooter>
             </Modal>
         </>
