@@ -9,20 +9,17 @@ function App() {
 
   function renderMain() {
     return (
-      <div className="surround">
-        <div className="center block">
-          <p className="welcome">Welcome to</p>
-          <p className="title">CaSSyDi</p>
-          <p className="subtitle">Cat Subreddit System of Distribution</p>
-        </div>
-        <UploadModal setMain={setMain}/>
+      <div className="center block">
+        <p className="welcome">Welcome to</p>
+        <p className="title">CaSSyDi</p>
+        <p className="subtitle">Cat Subreddit System of Distribution</p>
       </div>
     );
   }
 
   return (
     <>
-      {main ? renderMain() : <Upload setMain={setMain}/>}
+      <Upload loadMain={renderMain} />
     </>
     
   )

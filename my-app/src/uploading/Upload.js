@@ -9,6 +9,8 @@ function Upload(props) {
   const [altText, setAltText] = useState("White car");
   const [photo, setPhoto] = useState(undefined);
 
+  const [main, setMain] = useState(true);
+  
   var varPhoto = undefined; 
 
   const [results, setResults] = useState([{Name: "whitecat", Confidence: 78.77},{Name: "WhiteCats", Confidence: 98.77}])
@@ -140,18 +142,23 @@ function Upload(props) {
     setPhoto(photo);
   }
 
-
-  return (
-    <div className="surround">
+  function loadSection() {
+    return (
       <div className="main">
         <UploadSection photo={photo} altText={altText} />
         <div className="center">
           {loadRight()}
         </div>
+      </div>
+      );
+  }
 
-      </div>{
-        loading ? "" :
-        <UploadModal setMain={props.setMain}getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
+
+  return (
+    <div className="surround">
+        {main ? props.loadMain() : loadSection()}
+      {loading ? "" :
+        <UploadModal setMain={setMain} getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
       }
     </div>
 
