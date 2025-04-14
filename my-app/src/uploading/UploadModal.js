@@ -46,6 +46,7 @@ function UploadModal(props) {
                 };
                 reader.readAsDataURL(file);
                 toggle();
+                props.setMain(false);
             }
         }
         else {
@@ -55,7 +56,7 @@ function UploadModal(props) {
 
     return (
         <>
-            <Button className="button"onClick={() => toggle()}>Upload</Button>
+            <Button className="button"onClick={() => toggle()}>Upload Your Photo</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>
                     Upload Photo
@@ -66,7 +67,7 @@ function UploadModal(props) {
                 <p className="warningText" style={{"display": (wrongFileType ? "inherit" : "none")}}>Please submit a .jpeg photo</p>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="button uploadButton" onClick={() => onUpload()}>Upload</Button>
+                    <Button className="button uploadButton" onClick={() => {onUpload();}}>Upload</Button>
                     <Button className="button cancelButton">Cancel</Button>
                 </ModalFooter>
             </Modal>

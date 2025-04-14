@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import {Button} from 'reactstrap';
 import Loading from './Loading';
 
-function Upload() {
+function Upload(props) {
   const [altText, setAltText] = useState("White car");
   const [photo, setPhoto] = useState(undefined);
 
@@ -19,6 +19,8 @@ function Upload() {
 
   function getS3() {
     console.log("Running getS3");
+    
+    setLoading(true);
 
     const url = BASE_URL + "testing/uploadImage/";
     console.log(varPhoto.substring(23));
@@ -36,7 +38,6 @@ function Upload() {
         console.log(data['filename']);
         const imageId = data.filename;
 
-        setLoading(true);
         let pollingURL = BASE_URL + "testing/getResults/?file_name=" + imageId;
         poll(pollingURL);
       })
@@ -117,8 +118,10 @@ function Upload() {
           {loadRight()}
         </div>
 
-      </div>
-      <UploadModal getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
+      </div>{
+        loading ? "" :
+        <UploadModal setMain={props.setMain}getS3={getS3} setPhoto={uploadingPhoto} photo={photo} />
+      }
     </div>
 
   );
