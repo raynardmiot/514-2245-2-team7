@@ -96,7 +96,7 @@ function Upload(props) {
     if(invalidImage){
       rendered.push(<div className='info'>
         <div>
-          <h1>Image provided is not the image of a cat</h1>
+          <h3>Image provided is not an image of a cat or we do not support a subreddit that would fit this image.</h3>
         </div>
       </div>)
     }
@@ -105,7 +105,7 @@ function Upload(props) {
 
       if(results.length == 0){
         rendered.push(<div>
-           <h1>Model could not determine what subreddit the image belongs to </h1>
+           <h3>Model could not determine what subreddit the image belongs to </h3>
         </div>)
       }
       for (let result of results) {
