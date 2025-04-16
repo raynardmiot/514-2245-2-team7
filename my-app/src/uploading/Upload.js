@@ -66,7 +66,7 @@ function Upload(props) {
           setLoading(false);
           let count  = 0;
           for(let result of data.Labels){
-            if(result.Confidence < 92){
+            if(result.Confidence < 90){
               console.log("not image of cat")
               count +=1
             }
