@@ -63,6 +63,7 @@ function Upload(props) {
           }
         })
         .then(data => {
+          console.log(data);
           setLoading(false);
           let count  = 0;
           for(let result of data.Labels){
