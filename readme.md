@@ -22,12 +22,14 @@ s3_bucket_name = "something unique like swen-514-7-image-bucket-abcd1234"
 
 Once you have everything configured, in the `terraform/` directory run `terraform init`, `terraform plan`, and `terraform apply` to start the app. Type `yes` whenever Terraform prompts you to do so. Terraform will output the URL to the frontend of the app, hosted on the EC2.
 
-> **NOTE:** Before running the app, contact Raynard and tell him to start the Rekognition model. Rekognition doesn't work well with Terraform since it takes a while to re-train the model, so our app calls a pre-existing API hosted on Raynard's account to get image results. Rekognition is also very expensive to keep running in the background, so it turned off by default.
+> **NOTE:** Before running the app, contact Raynard and tell him to start the Rekognition model. Rekognition doesn't work well with Terraform since it takes a while to re-train the model, so our app calls a pre-existing API hosted on Raynard's account to get image results. Rekognition is also very expensive to keep running in the background, so it is turned off by default.
 
 ### Uploading an image
 
-Visit the webpage linked by Terraform's output. You should have a prompt to upload an image. Our app accepts `.jpg` and `.jpeg` formatted images. Upon uploading, after a short wait you will receive your results.
+Visit the webpage linked by Terraform's output. You should have a prompt to upload an image. Our app accepts `.jpg` and `.jpeg` formatted images. After a short wait upon uploading, the results will be displayed on the webpage.
 
 ### Cleanup
 
 Run `terraform destroy` in the `terraform/` directory to destroy all resources. Type `yes` when prompted.
+
+> **NOTE:** Be sure to contact Raynard and tell him to stop the Rekognition model to avoid any additional cost.
