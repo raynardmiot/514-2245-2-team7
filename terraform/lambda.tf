@@ -26,11 +26,6 @@ resource "aws_iam_policy" "cat_sender_iam_policy" {
             },
             {
                 "Effect": "Allow",
-                "Action": "rekognition:DetectCustomLabels",
-                "Resource": var.rekog_project_arn
-            },
-            {
-                "Effect": "Allow",
                 "Action": "s3:GetObject",
                 "Resource": [
                     aws_s3_bucket.s3.arn,
@@ -77,7 +72,6 @@ resource "aws_lambda_function" "cat_sender_lambda" {
 
     environment {
         variables = {
-            REKOG_PROJECT_ARN = var.rekog_project_arn
             DYNAMODB_TABLE_ARN = aws_dynamodb_table.labels_table.arn
         }
     }
