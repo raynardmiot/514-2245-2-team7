@@ -26,7 +26,7 @@ Once you have everything configured, in the `terraform/` directory run `terrafor
 
 ### Uploading an image
 
-Visit the webpage linked by Terraform's output. You should have a prompt to upload an image. Our app accepts `.jpg` and `.jpeg` formatted images. After a short wait upon uploading, the results will be displayed on the webpage.
+Visit the webpage linked by Terraform's output. You should have a prompt to upload an image. Our app accepts `.jpg` and `.jpeg` formatted images. After a short wait upon uploading, the results will be displayed on the webpage. Also, take caution with the file size as overly large images can't be processed.
 
 ### Cleanup
 
